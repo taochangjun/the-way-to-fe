@@ -1,0 +1,17 @@
+<style>
+  /* 不重置的情况 */
+  .no-reset {
+    width: 100%;
+    padding: 20px;
+    background: lightblue;
+  }
+  /* 重置后 */
+  .reset {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px;
+    background: lightgreen;
+  }
+</style>
+<div class="no-reset">这个 div 会溢出父容器（如果有父容器）</div>
+<div class="reset">这个 div 总宽度 = 父容器宽度，内边距向内压缩</div>
