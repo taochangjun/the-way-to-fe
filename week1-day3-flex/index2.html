@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>我的炫酷个人主页 | 粒子特效背景</title>
+    <!-- 引入 particles.js 库 (来自稳定 CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        /* 全局样式重置，让页面占满全屏，无滚动条 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', 'Arial', sans-serif;
+            color: #ffffff;
+            overflow: hidden; /* 隐藏滚动条，让页面全屏沉浸 */
+            height: 100vh;
+        }
+
+        /* 粒子画布容器：作为背景层，铺满全屏并固定 */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #0a0f1e 0%, #141a2b 100%); /* 深邃星空背景 */
+        }
+
+        /* 主要内容容器：相对定位，位于粒子层之上，水平垂直居中 */
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            backdrop-filter: blur(2px); /* 轻微模糊背景，提升文字可读性 */
+            pointer-events: auto; /* 确保按钮可点击 */
+        }
+
+        /* 个人卡片样式：半透明磨砂玻璃效果，增加现代感 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 头像样式 */
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        /* 名称与标语 */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #fff, #a0d2ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* 社交图标按钮组 */
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .social-btn:hover {
+            background: #ffffff;
+            color: #0a0f1e;
+            transform: scale(1.05);
+            border-color: transparent;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 600px) {
+            .glass-card {
+                padding: 2rem 1.5rem;
+                width: 95%;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .social-btn {
+                padding: 0.4rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* 自定义控制按钮：切换主题 */
+        .theme-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 2;
+            background: rgba(0,0,0,0.6);
+            border: none;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .theme-btn:hover {
+            background: rgba(255,255,255,0.3);
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 粒子动画容器 -->
+    <div id="particles-js"></div>
+
+    <!-- 主要内容区域 -->
+    <div class="content">
+        <div class="glass-card">
+            <!-- 这里放一张你喜欢的头像图片，可使用网络图片或本地图片 -->
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="头像" class="avatar">
+            <h1>✨ 林星尘 ✨</h1>
+            <div class="tagline">全栈开发 | 独立创作者 | 热爱科技与艺术</div>
+            <p style="margin-bottom: 2rem; opacity: 0.8;">用代码构建数字世界，探索前沿技术，分享创意与灵感。</p>
+            <div class="social-links">
+                <a href="#" class="social-btn">🐦 推特</a>
+                <a href="#" class="social-btn">💻 GitHub</a>
+                <a href="#" class="social-btn">📧 邮箱</a>
+                <a href="#" class="social-btn">🎨 掘金</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 趣味控制按钮：切换粒子主题风格 -->
+    <button class="theme-btn" id="switchThemeBtn">🎨 切换粒子主题</button>
+
+    <script>
+        // particles.js 核心配置对象 (根据官方文档以及最佳实践)
+        const particlesConfig = {
+            // 粒子基础配置
+            particles: {
+                number: {
+                    value: 120,          // 粒子总数
+                    density: {
+                        enable: true,
+                        value_area: 800  // 粒子分布密度区域
+                    }
+                },
+                color: {
+                    value: "#ffffff"     // 基础粒子颜色
+                },
+                shape: {
+                    type: "circle",      // 粒子形状：circle, edge, triangle, polygon, star
+                    stroke: {
+                        width: 0,
+                        color: "#000000"
+                    },
+                    polygon: {
+                        nb_sides: 5
+                    }
+                },
+                opacity: {
+                    value: 0.6,
+                    random: false,
+                    anim: {
+                        enable: false,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                // 粒子之间的连线效果
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                // 粒子运动控制
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            // 交互行为配置
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "grab"       // 鼠标悬浮时吸附粒子连线（grab模式）
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"       // 点击时增加粒子
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 0.8
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true            // 适配视网膜屏幕
+        };
+
+        // 星空主题配色 (深蓝+青白)
+        const starryTheme = JSON.parse(JSON.stringify(particlesConfig));
+        starryTheme.particles.color.value = "#b0e0ff";
+        starryTheme.particles.line_linked.color = "#80c0ff";
+        starryTheme.particles.move.speed = 1.5;
+
+        // 热情红紫主题 (更有科技感)
+        const fireTheme = JSON.parse(JSON.stringify(particlesConfig));
+        fireTheme.particles.color.value = ["#ff4d4d", "#ffb347", "#ff69b4"];
+        fireTheme.particles.line_linked.color = "#ff8c00";
+        fireTheme.particles.line_linked.opacity = 0.6;
+        fireTheme.particles.move.speed = 2.5;
+        fireTheme.particles.number.value = 100;
+        fireTheme.particles.shape.type = "star";
+
+        // 初始化粒子动画
+        let currentTheme = 0; // 0: 默认, 1: 星空, 2: 火焰
+        let currentParticlesConfig = particlesConfig; // 保留默认配置
+
+        // 启动粒子引擎
+        function initParticles(config) {
+            if (window.pJSDom && window.pJSDom[0]) {
+                window.pJSDom[0].pJS.fn.vendors.destroy();
+                window.pJSDom = [];
+            }
+            particlesJS('particles-js', config, function() {
+                console.log('Particles.js 初始化完成，主题已更新！');
+            });
+        }
+
+        // 切换主题函数
+        function switchTheme() {
+            currentTheme = (currentTheme + 1) % 3;
+            if (currentTheme === 0) {
+                currentParticlesConfig = particlesConfig;
+            } else if (currentTheme === 1) {
+                currentParticlesConfig = starryTheme;
+            } else {
+                currentParticlesConfig = fireTheme;
+            }
+            initParticles(currentParticlesConfig);
+        }
+
+        // 页面加载时启动默认粒子效果
+        window.onload = () => {
+            initParticles(particlesConfig);
+        };
+
+        // 绑定切换按钮事件
+        document.getElementById('switchThemeBtn').addEventListener('click', switchTheme);
+    </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>个人简介</title>
+        <style>
+            *, *::before, *::after {
+                box-sizing: border-box;
+            }
+
+            body {
+                background-color: #f5f7fb;
+                margin: 0;
+
+                /* 全局字体 */
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                /* 行高 （无单位数字，比如1.5），表示当前字体大小的1.5倍，这样当子元素字体大小不同时，行高会自动按比例缩放。 */
+                line-height: 1.5;
+                color: #1f2937;
+            }
+
+            header,
+            main,
+            footer {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 0 16px;
+            }
+
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-top: 20px;
+                padding-bottom: 12px;
+            }
+
+            section {
+                background: #fff;
+                border: 1px solid #e5e7eb;
+                border-radius: 10px;
+                padding: 20px;
+            }
+            /* 每个 section 下方留出 2rem 间距(2个rem，表示当前字体大小的2倍  */
+            /* section {
+                margin-bottom: 2rem; 
+            } 
+            */
+
+            /* 相邻兄弟选择器：选择紧挨着的下一个兄弟元素
+            含义：紧接在另一个 section 后面的 section，在其上方添加间距。
+            优点：不会给第一个 section 添加上边距，也不会给最后一个添加下边距，且间距不会叠加（因为只设置了上边距）。
+             */
+            /* section + section {
+                margin-top: 2rem;
+            } */
+            
+            /* 如果所有 section 都放在同一个容器内（例如 <main>），可以： */
+            main {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+                margin-top: 16px;
+                margin-bottom: 24px;
+            }
+
+            nav {
+                display: flex;
+                gap: 12px;
+            }
+
+            nav a {
+                color: #1d4ed8;
+                text-decoration: none;
+                padding: 6px 10px;
+                border-radius: 8px;
+            }
+
+            nav a:hover {
+                background: #dbeafe;
+            }
+
+            #intro img {
+                display: block;
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                margin-bottom: 12px;
+            }
+
+            #projects ul {
+                list-style: none;
+                padding: 0;
+                margin: 12px 0 0;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            #projects li {
+                flex: 1 1 220px;
+                border: 1px solid #e2e8f0;
+                background: #f8fafc;
+                border-radius: 8px;
+                padding: 12px;
+            }
+
+            .field {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                margin-bottom: 12px;
+            }
+
+            input,
+            textarea {
+                width: 100%;
+                padding: 10px 12px;
+                border: 1px solid #cbd5e1;
+                border-radius: 8px;
+            }
+
+            textarea {
+                min-height: 120px;
+                resize: vertical;
+            }
+
+            button {
+                background: #2563eb;
+                color: #fff;
+                border: 1px solid #1d4ed8;
+                border-radius: 8px;
+                padding: 10px 16px;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background: #1d4ed8;
+            }
+
+            footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 20px;
+                background: #fff;
+                border: 1px solid #e5e7eb;
+                border-radius: 10px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                margin-bottom: 24px;
+            }
+
+            footer > div {
+                flex: 1 1 320px;
+            }
+
+            footer p {
+                margin: 0;
+            }
+
+            footer > p {
+                color: #64748b;
+                font-size: 14px;
+                margin-top: 8px;
+            }
+
+            @media (max-width: 640px) {
+                header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 10px;
+                }
+
+                nav {
+                    flex-wrap: wrap;
+                }
+
+                footer {
+                    flex-direction: column;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Thomas的个人简介</h1>
+            <nav>
+                <a href="#intro">关于我</a>
+                <a href="#skills">技能列表</a>
+                <a href="#projects">项目</a>
+            </nav>
+        </header>
+        <main>
+            <section id="intro">
+                <h2>自我介绍</h2>
+                <img src="../images/avatar.png" alt="thomas">
+                <p>我是一个热爱编程的年轻人，喜欢探索新技术，喜欢挑战自己，喜欢分享知识。</p>
+            </section>
+            <section id="skills">
+                <h2>技能列表</h2>
+                <ul>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                    <li>VUE</li>
+                    <li>Python</li>
+                </ul>
+            </section>
+            <section id="projects">
+                <h2>项目</h2>
+                <ul>
+                    <li>项目1</li>
+                    <li>项目2</li>
+                    <li>项目3</li>
+                </ul>
+            </section>
+        </main>
+        <footer>
+            <div>
+                <h3>联系方式</h3>
+                <p><a href="mailto:630023774@qq.com">邮箱: 630023774@qq.com</a></p>
+            </div>
+            <div>
+                <h3>给我留言</h3>
+                <form action="#" method="post">
+                    <div class="field">
+                        <label for="name">姓名:</label>
+                        <input type="text" id="name" name="name" placeholder="请输入您的姓名" required>
+                    </div>
+                    <div class="field">
+                        <label for="email">邮箱:</label>
+                        <input type="email" id="email" name="email" placeholder="请输入您的邮箱" required>
+                    </div>
+                    <div class="field">
+                        <label for="message">留言:</label>
+                        <textarea id="message" name="message" placeholder="请输入您的留言" required></textarea>
+                    </div>
+                    <button type="submit">提交</button>
+                </form>
+            </div>
+            <p>版权所有 © 2026 个人简介</p>
+        </footer>
+    </body>
+
+</html>
