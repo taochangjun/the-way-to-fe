@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day4 Position 练习</title>
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box
+      }
+
+      .fixed-demo {
+        position: fixed;
+        top: 0;
+        right: 20px;
+        z-index: 100;
+        background: yellow;
+        padding: 12px 16px;
+        border-bottom: 1px solid #e5e5e5;
+      }
+
+      .pre-scroll {
+        height: 280px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #475569;
+        background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 100%);
+        border-bottom: 1px solid #bfdbfe;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .topbar-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .topbar a {
+        text-decoration: none;
+        color: #1d4ed8;
+        margin-left: 10px;
+      }
+
+      .back-top {
+        position:fixed;
+        right: 16px;
+        bottom: 16px;
+        border: 1px solid #1d4ed8;
+        border-radius: 999px;
+        background: #2563eb;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 14px;
+      }
+
+      .back-top:hover {
+        background: #1d4ed8;
+      }
+
+      .filler {
+        min-height: 1200px;
+      }
+
+      .container {
+        /* 设置了最大宽度，并且居中显示，并且有内边距 */
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 24px 16px 80px;
+      }
+
+      /* 卡片样式 */
+      .card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+
+      /* 角标卡片样式 */
+      .badge-card {
+        position: relative;
+      }
+
+      /* 角标样式 */
+      .badge {
+        /* 绝对定位，相对于父元素 */
+        position: absolute;
+        /* 距离父元素上边10px */
+        top: -10px;
+        /* 距离父元素右边10px */
+        right: -10px;
+        /* 背景颜色 */
+        background: #ef4444;
+        /* 文字颜色 */
+        color: #fff;
+        /* 字体大小 */
+        font-size: 12px;
+        /* 内边距 */
+        padding: 4px 8px;
+        /* 圆角 */
+        border-radius: 999px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="fixed-demo">我是fixed（一直钉在屏幕右上角）</div>
+
+    <section class="pre-scroll">
+      <p>先向下滚动，再观察 topbar 何时开始吸顶</p>
+    </section>
+
+    <header class="topbar">
+      <div class="topbar-inner">
+        <strong>Day4 Position 实战</strong>
+        <nav>
+          <a href="#intro">介绍</a>
+          <a href="#absolute-relative">角标</a>
+          <a href="#sticky-fixed">笔记</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card" id="intro">
+        <h1>Day4 Position 练习页面</h1>
+        <p>本日目标：掌握 relative / absolute / fixed / sticky 的使用场景。</p>
+      </section>
+      <section  class="card badge-card" id="absolute-relative">
+        <span class="badge">NEW</span>
+        <h2>absolute + relative 角标示例</h2>
+        <p>父元素用 <code>position: relative</code>，角标用 <code>position: absolute</code>。</p>
+      </section>
+      <section class="card" id="sticky-fixed">
+        <h2>sticky + fixed 说明</h2>
+        <p>顶部导航使用 <code>position: sticky</code>，滚动到顶部后保持可见。</p>
+        <p>右下角按钮使用 <code>position: fixed</code>，始终固定在视口位置。</p
+      </section>
+      <section class="filler"></section>
+
+      <a href="#intro" class="back-top">回到顶部</a>
+    </main>
+    
+  </body>
+
+</html>
