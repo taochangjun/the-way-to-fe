@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab03 - Containing Block Sticky</title>
+    <style>
+      body { margin: 0; font-family: Arial, sans-serif; }
+      .spacer { height: 220px; display: grid; place-items: center; background: #eef2ff; }
+      .topbar { position: sticky; top: 0; z-index: 10; background: #fff; border-bottom: 1px solid #ddd; padding: 10px 16px; }
+      .card { width: 280px; margin: 20px auto; border: 1px solid #ddd; border-radius: 10px; padding: 16px; position: relative; }
+      .badge { position: absolute; top: -10px; right: -10px; background: #ef4444; color: #fff; padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+      .filler { height: 800px; background: linear-gradient(#fff, #f8fafc); }
+    </style>
+  </head>
+  <body>
+    <div class="spacer">先下滑，再看 sticky 吸顶</div>
+    <header class="topbar">Sticky Topbar</header>
+    <div class="card">
+      <span class="badge">ABS</span>
+      <p>父 relative + 子 absolute，观察角标参照系。</p>
+    </div>
+    <div class="filler"></div>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab04 - Flex vs Grid</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; }
+      .section { margin-bottom: 28px; }
+      .items { border: 1px solid #ddd; padding: 10px; border-radius: 8px; gap: 10px; }
+      .item { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px; min-height: 60px; }
+
+      .flex-list { display: flex; flex-wrap: wrap; }
+      .flex-list .item { flex: 1 1 180px; }
+
+      .grid-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    </style>
+  </head>
+  <body>
+    <h1>Lab04：Flex 与 Grid 对照</h1>
+    <p>同一组卡片分别用 Flex 和 Grid 排布，观察代码与结果差异。</p>
+
+    <div class="section">
+      <h2>Flex 方案</h2>
+      <div class="items flex-list">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+        <div class="item">D</div><div class="item">E</div><div class="item">F</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Grid 方案</h2>
+      <div class="items grid-list">
+        <div class="item">A</div><div class="item">B</div><div class="item">C</div>
+        <div class="item">D</div><div class="item">E</div><div class="item">F</div>
+      </div>
+    </div>
+  </body>
+</html>

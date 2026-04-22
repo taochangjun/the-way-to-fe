@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab02 - CSSOM Cascade Specificity</title>
+    <style>
+      .card { color: #111827; padding: 12px; border: 1px solid #ddd; margin: 10px 0; }
+      .card { color: #2563eb; } /* 同优先级，后写覆盖 */
+      #target { color: #dc2626; } /* id 优先级更高 */
+      .card.highlight { color: #16a34a; } /* 链式 class 比单 .card 更具体 */
+    </style>
+  </head>
+  <body>
+    <h1>Lab02：层叠与优先级</h1>
+    <p>用 DevTools 查看 #target 的 color 最终来源，尝试增删 class 观察变化。</p>
+
+    <div id="target" class="card">我是 #target.card</div>
+    <div id="target2" class="card highlight">我是 .card.highlight</div>
+
+    <button id="toggle">切换 target2 的 highlight</button>
+
+    <script>
+      const target = document.getElementById("target2");
+      document.getElementById("toggle").addEventListener("click", () => {
+        target.classList.toggle("highlight");
+      });
+    </script>
+  </body>
+</html>

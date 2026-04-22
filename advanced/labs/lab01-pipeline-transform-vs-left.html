@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab01 - transform vs left</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; }
+      .stage { position: relative; height: 80px; border: 1px solid #ddd; margin: 12px 0; overflow: hidden; }
+      .ball { position: absolute; top: 20px; width: 40px; height: 40px; border-radius: 50%; }
+      #leftBall { left: 0; background: #f97316; }
+      #transformBall { left: 0; background: #2563eb; }
+      button { margin-right: 8px; }
+    </style>
+  </head>
+  <body>
+    <h1>Lab01：left vs transform 动画</h1>
+    <p>打开 Performance 录制，分别点击两个按钮，对比 Layout/Composite 开销。</p>
+
+    <button id="runLeft">运行 left 动画</button>
+    <button id="runTransform">运行 transform 动画</button>
+
+    <div class="stage"><div id="leftBall" class="ball"></div></div>
+    <div class="stage"><div id="transformBall" class="ball"></div></div>
+
+    <script>
+      function animateLeft(el) {
+        let x = 0;
+        const timer = setInterval(() => {
+          x += 4;
+          el.style.left = x + "px";
+          if (x >= 600) clearInterval(timer);
+        }, 16);
+      }
+
+      function animateTransform(el) {
+        let x = 0;
+        const timer = setInterval(() => {
+          x += 4;
+          el.style.transform = `translateX(${x}px)`;
+          if (x >= 600) clearInterval(timer);
+        }, 16);
+      }
+
+      document.getElementById("runLeft").addEventListener("click", () => {
+        const el = document.getElementById("leftBall");
+        el.style.left = "0px";
+        animateLeft(el);
+      });
+
+      document.getElementById("runTransform").addEventListener("click", () => {
+        const el = document.getElementById("transformBall");
+        el.style.transform = "translateX(0px)";
+        animateTransform(el);
+      });
+    </script>
+  </body>
+</html>

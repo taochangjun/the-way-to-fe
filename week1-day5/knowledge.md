@@ -186,6 +186,73 @@ Day5 常见组合：
 
 ---
 
+## 4.2 断点写法（基础版）与进阶写法
+
+### 4.2.1 基础断点写法（你当前页面正在用）
+
+基础思路是：手动定义每个宽度区间的列数。
+
+```css
+/* 手机默认 */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+/* 平板 */
+@media (min-width: 768px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 桌面 */
+@media (min-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
+
+优点：
+- 上手快，逻辑直观
+- 每个断点的布局可控
+
+不足：
+- 断点越来越多时维护成本上升
+- 新设备尺寸出现时，可能需要继续补规则
+
+### 4.2.2 进阶写法：`auto-fit + minmax`
+
+进阶思路是：声明“卡片最小宽度”，让浏览器自动决定一行放几列。
+
+```css
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+```
+
+大白话解释：
+- `minmax(220px, 1fr)`：每个卡片最小 220px，空间足够就拉伸
+- `auto-fit`：一行能放几个就放几个，自动适配
+
+好处：
+- 通常能减少断点数量
+- 布局更“自适应”，对不同宽度更友好
+
+### 4.2.3 `auto-fit` 和 `auto-fill` 区别
+
+- `auto-fit`：会收起空轨道，让现有卡片拉伸填满（常用）
+- `auto-fill`：保留空轨道，视觉上可能出现“预留槽位”
+
+新手建议：
+- 卡片网格优先用 `auto-fit`
+
+---
+
 ## 5. Day5 三大高频问题与解法
 
 ## 5.1 横向滚动条（最常见）
@@ -322,6 +389,185 @@ body {
 
 ### 下一步
 - Day6：JavaScript DOM 与事件交互
+```
+
+---
+
+## 附录：完整 `index.html` 源代码
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day5 Responsive 实战</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        line-height: 1.5;
+        color: #1f2937;
+        background: #f5f7fb;
+      }
+
+      .container {
+        width: min(100%, 960px);
+        margin: 0 auto;
+        padding: 12px;
+      }
+
+      .topbar {
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .topbar-inner {
+        width: min(100%, 960px);
+        margin: 0 auto;
+        padding: 10px 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .topbar nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .topbar a {
+        text-decoration: none;
+        color: #1d4ed8;
+        padding: 6px 10px;
+        border-radius: 8px;
+      }
+
+      .topbar a:hover {
+        background: #dbeafe;
+      }
+
+      .hero,
+      .card,
+      .tips {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+      }
+
+      .hero {
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .card {
+        padding: 14px;
+      }
+
+      .tips {
+        margin-top: 12px;
+        padding: 14px;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+      }
+
+      @media (min-width: 768px) {
+        .container {
+          padding: 16px;
+        }
+
+        .cards {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .container {
+          padding: 20px;
+        }
+
+        .cards {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <strong>Day5 Responsive 实战</strong>
+        <nav>
+          <a href="#intro">介绍</a>
+          <a href="#cards">卡片区</a>
+          <a href="#tips">检查点</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero" id="intro">
+        <h1>响应式布局练习页</h1>
+        <p>默认手机单列，平板双列，桌面三列。请用 DevTools 切换 375 / 768 / 1024 验证布局变化。</p>
+      </section>
+
+      <section class="cards" id="cards">
+        <article class="card">
+          <h2>模块 A</h2>
+          <p>移动端单列，保证可读性。</p>
+        </article>
+        <article class="card">
+          <h2>模块 B</h2>
+          <p>平板开始并排，提升空间利用率。</p>
+        </article>
+        <article class="card">
+          <h2>模块 C</h2>
+          <p>桌面三列展示，提高信息密度。</p>
+        </article>
+        <article class="card">
+          <h2>模块 D</h2>
+          <p>继续观察不同断点下卡片数量变化。</p>
+        </article>
+        <article class="card">
+          <h2>模块 E</h2>
+          <p>练习时可替换为真实内容模块。</p>
+        </article>
+        <article class="card">
+          <h2>模块 F</h2>
+          <p>确保手机下无横向滚动条。</p>
+        </article>
+      </section>
+
+      <section class="tips" id="tips">
+        <h2>自测提示</h2>
+        <ul>
+          <li>375px：单列，无横向滚动。</li>
+          <li>768px：双列，间距舒适。</li>
+          <li>1024px：三列，内容不拥挤。</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
 ```
 
 ---
