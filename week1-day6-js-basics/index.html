@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day6 - JS 基础语法与数据类型</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        background: #f8fafc;
+        color: #0f172a;
+      }
+      .container {
+        width: min(960px, 100%);
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+      code {
+        background: #eef2ff;
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        border-radius: 10px;
+        padding: 12px;
+        overflow: auto;
+      }
+      .muted {
+        color: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="card">
+        <h1>Day6：JS 基础语法与数据类型</h1>
+        <p class="muted">
+          本页只做 JavaScript 基础演示，不作为 DOM 操作练习页。请打开浏览器控制台查看输出。
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>练习清单</h2>
+        <ul>
+          <li>条件分支：成绩等级判断</li>
+          <li>循环：1-100 偶数求和</li>
+          <li>函数 + 对象：订单汇总</li>
+          <li>数组方法预热：<code>map/filter/reduce</code></li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>使用方式</h2>
+        <ol>
+          <li>打开页面，按 <code>F12</code> 进入控制台</li>
+          <li>阅读自动打印的四组输出</li>
+          <li>在控制台手动调用 <code>Day6JS.runAll()</code> 再跑一遍</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>核心代码片段</h2>
+        <pre>function getGrade(score) {
+  if (score &gt;= 90) return "A";
+  if (score &gt;= 80) return "B";
+  if (score &gt;= 70) return "C";
+  if (score &gt;= 60) return "D";
+  return "F";
+}</pre>
+      </section>
+    </main>
+
+    <script>
+      function getGrade(score) {
+        if (score >= 90) return "A";
+        if (score >= 80) return "B";
+        if (score >= 70) return "C";
+        if (score >= 60) return "D";
+        return "F";
+      }
+
+      function sumEvenNumbers(max) {
+        let total = 0;
+        for (let i = 1; i <=max; i +=1) {
+           if (i % 2 === 0) total += i;
+        }
+        return total;
+      }  
+      
+      function buildOrderSummary(price, count, userType) {
+        const subtotal = price * count;
+        const discountRate = userType === "vip" ? 0.9 : 1;
+        const total = Number((subtotal * discountRate).toFixed(2));
+        return {
+          price,
+          count,
+          userType,
+          subtotal: Number(subtotal.toFixed(2)),
+          discountRate,
+          total
+        };
+      }
+
+      function runArrayDemo() {
+        const prices = [19.9, 35, 120, 66.6, 8.8];
+        const withTax = prices.map((v) => Number((v * 1.06).toFixed(2)));
+        const filtered = withTax.filter((v) => v >= 40);
+        const total = filtered.reduce((acc, cur) => acc + cur, 0);
+        return {
+          original: prices,
+          withTax,
+          filtered,
+          total: Number(total.toFixed(2))
+        };
+      }
+
+      function runAll() {
+        console.log("[Day6] 成绩等级", { score: 85, grade: getGrade(85) });
+        console.log("[Day6] 1-100 偶数和", sumEvenNumbers(100));
+        console.log("[Day6] 订单汇总", buildOrderSummary(99.9, 3, "vip"));
+        console.log("[Day6] 数组方法演示", runArrayDemo());
+      }
+
+      window.Day6JS = {
+        getGrade,
+        sumEvenNumbers,
+        buildOrderSummary,
+        runArrayDemo,
+        runAll
+      };
+
+      runAll();
+    </script>
+  </body>
+</html>
