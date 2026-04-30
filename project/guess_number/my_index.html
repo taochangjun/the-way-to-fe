@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Guess Number</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="card">
+            <h1>数字猜谜游戏</h1>
+            <p>我已经想好一个 1-100 的整数，来猜猜看。</p>
+            <div class="row">
+                <input id="guessInput" type="text" placeholder="请输入 1-100 的数字" />
+                <button id="guessBtn"  type="button">猜</button>
+            </div>
+            <button id="newGameBtn"  type="button">新游戏</button>
+            <div id="message"></div>
+            <div id="attempts">已猜次数：0</div>
+            <div id="history">历史猜测：暂无</div>
+        </main>
+        <script>
+            const guessInput = document.getElementById('guessInput');
+            const guessBtn = document.getElementById('guessBtn');
+            const newGameBtn = document.getElementById('newGameBtn');
+            const message = document.getElementById('message');
+            const attemptsEl = document.getElementById('attempts');
+            const historyEl = document.getElementById('history');
+
+            let targetNumber = 0;
+            let attempts = 0;
+            let guessHistory = [];
+
+            function randomInt1To100() {
+                return Math.floor(Math.random() * 100) + 1;
+            }
+
+            function resetGame() {
+                targetNumber = randomInt1To100();
+                attempts = 0;
+                guessHistory = [];
+                attemptsEl.textContent = "已猜次数：0";
+                historyEl.textContent = "历史猜测：暂无";
+                message.textContent = "新游戏开始，继续猜吧！";
+                guessInput.value = "";
+                guessInput.disabled = false;
+                guessBtn.disabled = false;
+                newGameBtn.style.display = "none";
+                guessInput.focus();
+            }
+
+            function handleGuess() {
+                const rawValue = guessInput.value;
+                const error = validateGuess(rawValue);
+                if (error) {
+                    message.textContent = error;
+                    return;
+                }
+
+                const guess = Number(rawValue);
+                attempts += 1;
+                guessHistory.push(guess);
+                attemptsEl.textContent = `已猜次数：${attempts}`;
+                historyEl.textContent = `历史猜测：${guessHistory.join(", ")}`;
+
+                if (guess > targetNumber) {
+                    message.textContent = "猜大了";
+                } else if (guess < targetNumber) {
+                    message.textContent = "猜小了";
+                } else {
+                    message.textContent = `恭喜！猜中了！共用 ${attempts} 次`;
+                    guessInput.disabled = true;
+                    guessBtn.disabled = true;
+                    newGameBtn.style.display = "inline-block";
+                }
+            }
+
+            function validateGuess(rawValue) {
+                if (rawValue.trim() === "") {
+                    return "请输入数字，不要留空。";
+                }
+                const value = Number(rawValue);
+                if (!Number.isInteger(value)) {
+                    return "请输入整数（1-100）。";
+                }
+                if (value < 1 || value > 100) {
+                    return "请输入 1 到 100 之间的数字。";
+                }
+                return null;
+            } 
+
+            guessBtn.addEventListener('click', handleGuess);
+            guessInput.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter' && !guessBtn.disabled) {
+                    handleGuess();
+                }
+            });
+            newGameBtn.addEventListener('click', resetGame);
+            resetGame();
+        </script>
+    </body>
+</html>

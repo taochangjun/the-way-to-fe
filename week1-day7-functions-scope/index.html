@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day7 函数与作用域</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+          sans-serif;
+        line-height: 1.5;
+        color: #1f2937;
+        background: #f5f7fb;
+      }
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 24px 16px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 16px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      @media (min-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      button {
+        appearance: none;
+        border: 1px solid #e5e7eb;
+        background: #111827;
+        color: #fff;
+        border-radius: 8px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      button.secondary {
+        background: #fff;
+        color: #111827;
+      }
+      button:active {
+        transform: translateY(1px);
+      }
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+      .hint {
+        margin: 8px 0 0;
+        color: #6b7280;
+        font-size: 13px;
+      }
+      .kpi {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .kpi > div {
+        border: 1px dashed #e5e7eb;
+        border-radius: 10px;
+        padding: 10px 12px;
+      }
+      .kpi .label {
+        color: #6b7280;
+        font-size: 12px;
+      }
+      .kpi .value {
+        font-size: 20px;
+        font-weight: 700;
+      }
+      pre {
+        margin: 12px 0 0;
+        background: #0b1020;
+        color: #e5e7eb;
+        border-radius: 10px;
+        padding: 12px;
+        overflow: auto;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <h1>Day7：函数与作用域</h1>
+        <p>
+          这页用几个小实验帮你建立直觉：<b>函数拆分</b>、<b>作用域链</b>、<b>闭包</b>。
+        </p>
+        <p class="hint">
+          建议：打开浏览器 DevTools → Console，一边点按钮一边看输出。
+        </p>
+      </section>
+
+      <section class="grid" style="margin-top: 12px">
+        <section class="card">
+          <h2 style="margin: 0 0 8px">实验 1：闭包（计数器工厂）</h2>
+          <div class="row">
+            <button id="a-inc">A +1</button>
+            <button class="secondary" id="a-dec">A -1</button>
+            <button id="b-inc">B +2</button>
+            <button class="secondary" id="b-dec">B -2</button>
+            <button class="secondary" id="reset">重置</button>
+          </div>
+
+          <div class="kpi">
+            <div>
+              <div class="label">Counter A（step=1）</div>
+              <div class="value mono" id="a-val">0</div>
+            </div>
+            <div>
+              <div class="label">Counter B（step=2）</div>
+              <div class="value mono" id="b-val">0</div>
+            </div>
+          </div>
+
+          <p class="hint">
+            关键点：A 和 B 是用同一个函数“工厂”创建的，但它们各自拥有自己的私有
+            <span class="mono">count</span>。
+          </p>
+        </section>
+
+        <section class="card">
+          <h2 style="margin: 0 0 8px">实验 2：作用域链（从内到外找变量）</h2>
+          <div class="row">
+            <button id="scope-run">运行示例</button>
+            <button class="secondary" id="clear-log">清空日志</button>
+          </div>
+          <pre id="log" class="mono">点击“运行示例”开始。</pre>
+          <p class="hint">
+            关键点：变量查找顺序是“当前作用域 → 外层 → … → 全局”。找不到就会报错。
+          </p>
+        </section>
+
+        <section class="card">
+          <h2 style="margin: 0 0 8px">实验 3：var vs let（循环 + setTimeout）</h2>
+          <div class="row">
+            <button id="var-run">运行 var 版本</button>
+            <button id="let-run">运行 let 版本</button>
+          </div>
+          <p class="hint">
+            预期：<span class="mono">var</span> 版本通常输出 3 个相同数字；<span class="mono"
+              >let</span
+            >
+            版本输出 0、1、2。
+          </p>
+        </section>
+
+        <section class="card">
+          <h2 style="margin: 0 0 8px">实验 4：函数拆分（输入→输出）</h2>
+          <div class="row">
+            <button id="calc-run">计算示例</button>
+          </div>
+          <p class="hint">
+            把数据处理写成函数：更好复用、更好测试，也更容易读。
+          </p>
+          <pre id="calc-out" class="mono">点击“计算示例”开始。</pre>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      function $(id) {
+        return document.getElementById(id);
+      }
+
+      function appendLog(line) {
+        const el = $("log");
+        const next = (el.textContent ? el.textContent : "") + "\n" + line;
+        el.textContent = next.trim();
+      }
+
+      function setText(id, text) {
+        $(id).textContent = String(text);
+      }
+
+      function createCounter(step) {
+        let count = 0;
+        return {
+          inc: function () {
+            count += step;
+            return count;
+          },
+          dec: function () {
+            count -= step;
+            return count;
+          },
+          get: function () {
+            return count;
+          },
+          reset: function () {
+            count = 0;
+            return count;
+          },
+        };
+      }
+
+      const counterA = createCounter(1);
+      const counterB = createCounter(2);
+
+      function renderCounters() {
+        setText("a-val", counterA.get());
+        setText("b-val", counterB.get());
+      }
+
+      $("a-inc").addEventListener("click", function () {
+        counterA.inc();
+        renderCounters();
+      });
+      $("a-dec").addEventListener("click", function () {
+        counterA.dec();
+        renderCounters();
+      });
+      $("b-inc").addEventListener("click", function () {
+        counterB.inc();
+        renderCounters();
+      });
+      $("b-dec").addEventListener("click", function () {
+        counterB.dec();
+        renderCounters();
+      });
+      $("reset").addEventListener("click", function () {
+        counterA.reset();
+        counterB.reset();
+        renderCounters();
+      });
+
+      renderCounters();
+
+      $("clear-log").addEventListener("click", function () {
+        $("log").textContent = "";
+      });
+
+      $("scope-run").addEventListener("click", function () {
+        appendLog("---- scope demo ----");
+        const x = "outer-x";
+        function outer() {
+          const y = "outer-y";
+          function inner() {
+            const z = "inner-z";
+            appendLog("x=" + x);
+            appendLog("y=" + y);
+            appendLog("z=" + z);
+          }
+          inner();
+        }
+        outer();
+      });
+
+      $("var-run").addEventListener("click", function () {
+        console.log("---- var demo ----");
+        for (var i = 0; i < 3; i++) {
+          setTimeout(function () {
+            console.log("var i =", i);
+          }, 0);
+        }
+      });
+
+      $("let-run").addEventListener("click", function () {
+        console.log("---- let demo ----");
+        for (let i = 0; i < 3; i++) {
+          setTimeout(function () {
+            console.log("let i =", i);
+          }, 0);
+        }
+      });
+
+      function sum(nums) {
+        let total = 0;
+        for (const n of nums) total += n;
+        return total;
+      }
+
+      function average(nums) {
+        if (nums.length === 0) return 0;
+        return Math.round((sum(nums) / nums.length) * 10) / 10;
+      }
+
+      function max(nums) {
+        let m = -Infinity;
+        for (const n of nums) m = Math.max(m, n);
+        return m;
+      }
+
+      $("calc-run").addEventListener("click", function () {
+        const scores = [98, 77, 85, 100, 92];
+        const out = {
+          scores: scores,
+          sum: sum(scores),
+          average: average(scores),
+          max: max(scores),
+        };
+        $("calc-out").textContent = JSON.stringify(out, null, 2);
+      });
+    </script>
+  </body>
+</html>
